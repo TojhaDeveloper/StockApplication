@@ -1,0 +1,40 @@
+.list-container {
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    display: flex;
+    height: 50px;
+    align-items: center;
+    justify-content: space-between;
+    cursor:pointer;
+    border-bottom: 1px solid blueviolet;
+}
+
+.list__symbol {
+    margin-left: 20px;
+    width:auto;
+    border:1px solid greenyellow;
+    border-radius: 2px;
+    box-shadow: 1px 1px 1px 1px black;
+    padding:4px;
+    color: blueviolet;
+    font-size: 0.8rem;
+}
+.list__delete {
+    margin-right: 20px;
+    height: 20px;
+    width: 20px;
+    border: 1px solid black;
+    text-align: center;
+    border-radius: 50%;
+}
+.list__name {
+    font-size: medium;
+    font-style: italic;
+}
+
+.list-container:hover {
+    box-shadow: 1px 1px 1px blueviolet;
+}
+.list__delete:hover {
+    box-shadow: 1px 1px 1px black;
+}

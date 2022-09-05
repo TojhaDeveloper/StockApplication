@@ -1,0 +1,97 @@
+.listdetail__container {
+    height: 100vh;
+}
+.nav__header {
+    height:10%;
+    background-color: #0d6efd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.nav__header ul {
+    display: flex;
+    list-style: none;
+    color: #fff;
+    font-size: 1.5rem;
+    gap: 10px;
+    font-weight: bold;
+    pointer-events: none;
+}
+.listdetail_back {
+    text-decoration: none;
+    position: absolute;
+    top:50%;
+    left:10%;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color:white;
+    transform: translateY(-50%);
+}
+
+.company__card__container {
+    display: flex;
+    gap: 10px;
+}
+.company__card {
+    display: flex;
+    flex-direction: column;
+    padding:5px;
+    border-radius: 5px;
+    border:1px solid white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+    margin: 25px 0;
+    margin-right:120px;
+}
+
+.company__card h3 {
+    font-size: 1.2rem;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 2px solid #f3f3f3;
+    padding-bottom: 10px;
+}
+.company__card  p {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+
+.table__content {
+    border-collapse: collapse;
+    margin: 25px 0;
+    margin-left:120px;
+    font-size: 0.9rem;
+    min-width: 400px;
+    border-radius: 5px 5px 0 0;
+    cursor: pointer;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+}
+.table__content thead tr {
+    background-color: #009879;
+    color:#fff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.table__content th,
+.table__content td {
+    padding: 12px 15px;
+}
+.table__content tbody tr {
+    border-bottom: 1px solid #ddd;
+    transition: all 0.5s ease-in-out;
+}
+.table__content tbody tr:hover {
+    background-color: #009879;
+    font-weight: bold;
+}
+.table__content tbody tr:nth-of-type(even){
+    background-color: #f3f3f3;
+}
+.table__content tbody tr:last-of-type {
+    border-bottom: 2px solid #009879 ;
+}

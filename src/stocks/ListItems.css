@@ -1,0 +1,32 @@
+.list-items {
+    margin:5rem;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+}
+.add {
+    position: absolute;
+    top:20px;
+}
+.add_btn {
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+    border-radius: 2px;
+    outline: none;
+    border: none;
+    background-color: #0d6efd;
+    color:white;
+    font-weight: bold;
+    font-size: 2.0rem;
+    transition: all 0.25s ease-in;
+}
+.add_btn:hover{
+    border:1px solid #0d6efd;
+    background-color: #3c7cdc;
+    transform: scale(1.2);
+}
+.add_btn:focus {
+    border: 2px solid black;
+}
