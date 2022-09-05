@@ -26,6 +26,7 @@
     border: 1px solid black;
     text-align: center;
     border-radius: 50%;
+    background-color: #dc3545;
 }
 .list__name {
     font-size: medium;

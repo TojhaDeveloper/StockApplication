@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react'
 import ListItem from './ListItem'
 import './ListItems.css'
 import { toast } from 'react-toastify';
+import Spinner from '../components/Spinner';
+
 
 
 export const URL = `http://localhost:3005/stocks`
@@ -24,8 +26,7 @@ function ListItems() {
         },
         body: JSON.stringify(response)
       })
-      const result = await d.json()
-      console.log('RESULT ', result);
+      await d.json()
       toast('Delete Sucessfully!', {
         position: "top-right",
         autoClose: 2000,
@@ -37,6 +38,27 @@ function ListItems() {
         type:"success",
         theme:"colored"
         });
+
+        // Apprently no way to readjust ids using json-server hence commented code below
+        // Open issue json-server
+        // Refer:: https://github.com/typicode/json-server/issues/216
+
+
+        // // after delete need to fetch the data and reupdate there ids 
+        // const dfetched = await fetch(`${URL}`)
+        // const getResults = await dfetched.json()
+        // console.log(getResults);
+        // const updatedData = getResults.map((d,i)=> {
+        //   return {...d,id:i+1}
+        // })
+        // const jsonData = {stocks:updatedData}
+        // await fetch(`${URL}`,{
+        //   method:"GET",
+        //   headers:{
+        //     "Content-Type":"application/json"
+        //   },
+        //   body:JSON.stringify(jsonData)
+        // })
     }
     else {
       console.log('Cancelled!!');
@@ -52,9 +74,12 @@ function ListItems() {
   setVal(prev=>({...prev,[e.target.name]:e.target.value}))
  },[])
 
- const handleSubmit = ()=>{
+ const handleSubmit = async ()=>{
   const {symbol,company} = val
-  if(response.some(r => r.symbol === val.symbol.toUpperCase())){
+  if (!symbol && !company){
+       return
+  }
+  if(response.some(r => r.symbol.toUpperCase() === val.symbol.toUpperCase())){
     toast('Symbol Already Exists!', {
       position: "top-right",
       autoClose: 2000,
@@ -69,7 +94,7 @@ function ListItems() {
       setShow(true)
       return
     }
-    setResponse(response => [...response,{symbol,name:company, "stock_exchange": {
+    let data = {symbol,name:company, "stock_exchange": {
       "name": "New York Stock Exchange",
       "acronym": "NYSE",
       "mic": "XNYS",
@@ -78,7 +103,6 @@ function ListItems() {
       "city": "New York",
       "website": "www.nyse.com"
   },
-  "id":response.length+1,
   "lasttendays": [
       {
           "open": 129.8,
@@ -160,42 +184,57 @@ function ListItems() {
           "volume": 294100,
           "date": "08/24/22"
       }
-  ]}])
-  setShow(true)
-  toast('Added Sucessfully!', {
-    position: "top-right",
-    autoClose: 2000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    type:"success",
-    theme:"colored"
-    });
+  ]}
+
+  setResponse(response => [...response,{...data,id:response.length+1}])
+   try {
+     await fetch(`${URL}`,{
+       method:"POST",
+       headers:{
+         "Content-Type":"application/json"
+       },
+       body:JSON.stringify({...data,id:response.length+1})
+     })
+     setShow(true)
+    toast('Added Sucessfully!', {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      type:"success",
+      theme:"colored"
+      })
+   }
+   catch(e){
+    console.error("Error Recevied ",e.message)
+   }
 
    
   }
  
  useEffect(()=>{
   const id = setTimeout(()=> {
-    fetch(`${URL}?_start=0&_end=10`).then(res => res.json()).then(data => setResponse(data))
+    fetch(`${URL}`).then(res => res.json()).then(data => setResponse(data))
   },1000)
   return () => clearTimeout(id)
   },[])
 
   if(response.length === 0){
-   return <h1>Loading....</h1>
+   return <Spinner/>
   }
   return (
     <div className="list-items">
     {show ? (<div className="add">
       <button className="add_btn" onClick={handleClick}>+</button>
-      </div>):(<>
-       <input type="text" name="symbol" value={val.symbol}   autoComplete="off" placeholder="enter Symbol" onChange={handleChange}/>
-       <input type="text" name="company" value={val.company} autoComplete="off" placeholder="enter Company Name" onChange={handleChange}/>
+      </div>):(<div  className="add_symbol_box">
+      <div className="add_symbol_box_remove" onClick={handleClick}>x</div>
+       <input type="text" name="symbol" value={val.symbol}   autoComplete="off" placeholder="Enter Symbol" onChange={handleChange}/>
+       <input type="text" name="company" value={val.company} autoComplete="off" placeholder="Enter Company Name" onChange={handleChange}/>
        <button onClick={handleSubmit}>Submit</button>
-      </>)}
+      </div>)}
     {response.map((data)=> <ListItem key={data.id} data={data} onDeleteItem={onDeleteItem}/>)}
     </div>
      
