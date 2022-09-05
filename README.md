@@ -13,6 +13,9 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
-### `cd src/data` and run `json-server --watch --port 3005 db.json`
 
-Spins up the json-server and port 3005 (make sure no process is running at port 3005)
+If you dont have json-server, Please install it globally using
+### `npm install -g json-server`
+Please run below commands to start the server
+### `cd src/data` and run `json-server --watch --port 3005 db.json`
+Above command Spins up the json-server at port 3005 (make sure no process is running at port 3005)
